@@ -10,4 +10,4 @@ $router->group(['prefix' => '/api/client', 'middleware' => 'clientAuth'], functi
 });
 
 $router->post('/api/client/login', 'JWTController@index');
-$router->post('/api/client/register', 'ClientController@create');
+$router->post('/api/client/register', 'ClientController@store');
