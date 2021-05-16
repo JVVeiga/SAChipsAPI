@@ -1,9 +1,9 @@
 <?php
-namespace App\Http\Middleware;
+namespace App\Http\Controllers\Auth;
 
 use App\Models\Client;
 
-class ClientAuth extends AbstractAuth {
+class ClientAuthController extends AbstractJWT {
 
     public function __construct() {
         parent::__construct(Client::class, env('JWT_TOKEN_CLIENT'));

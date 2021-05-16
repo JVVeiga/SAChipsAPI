@@ -76,6 +76,7 @@ $app->configure('app');
 
 $app->routeMiddleware([
      'clientAuth' => App\Http\Middleware\ClientAuth::class,
+     'userAuth' => App\Http\Middleware\UserAuth::class
 ]);
 
 /*

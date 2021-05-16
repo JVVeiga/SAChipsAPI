@@ -1,12 +1,20 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use App\Models\Client;
+use Laravel\Lumen\Routing\Controller;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class JWTController extends Controller {
+abstract class AbstractJWT extends Controller {
+
+    protected $model;
+    protected $tokenJWT;
+
+    public function __construct($model, $tokenJWT) {
+        $this->model = $model;
+        $this->tokenJWT = $tokenJWT;
+    }
 
     public function index(Request $request) {
         $this->validate($request, [
@@ -19,15 +27,15 @@ class JWTController extends Controller {
             'password.required' => 'A senha é obrigatória'
         ]);
 
-        $client = Client::where('email', $request->email)->first();
-        if ( is_null($client) || !Hash::check($request->password, $client->password) ) {
+        $entity = $this->model::where('email', $request->email)->first();
+        if ( is_null($entity) || !Hash::check($request->password, $entity->password) ) {
             return response()->json(['error' => 'E-mail ou senha inválidos.'], 401);
         }
         $token = JWT::encode([
-            'name' => $client->name,
+            'name' => $entity->name,
             'email' => $request->email,
             'exp' => time() + (env('JWT_EXP', 1440) * 60)
-        ], env('JWT_TOKEN'));
+        ], $this->tokenJWT);
 
         return [
             'access_token' => $token
