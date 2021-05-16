@@ -2,23 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class Controller extends BaseController {
 
-    protected $class;
+    protected $model;
+
+    public function __construct($model) {
+        $this->model = $model;
+    }
 
     public function index(Request $request) {
-        return $this->class::paginate($request->perPage);
+        return $this->model::paginate($request->perPage);
     }
 
     public function store(Request $request) {
-        return response()->json($this->class::create($request->all()), 201);
+        return response()->json($this->model::create($request->all()), 201);
     }
 
     public function show(int $id) {
-        $resource = $this->class::find($id);
+        $resource = $this->model::find($id);
         if ( is_null($resource) ) {
             return response()->json([
                 'error' => 'Registro não encontrado.'
@@ -28,7 +33,7 @@ class Controller extends BaseController {
     }
 
     public function update(int $id, Request $request) {
-        $resource = $this->class::find($id);
+        $resource = $this->model::find($id);
         if ( is_null($resource) ) {
             return response()->json([
                 'error' => 'Registro não encontrado.'
@@ -40,7 +45,7 @@ class Controller extends BaseController {
     }
 
     public function destroy(int $id) {
-        $removed = $this->class::destroy($id);
+        $removed = $this->model::destroy($id);
         if ( $removed === 0 ) {
             return response()->json([
                 'error' => 'Registro não encontrado.'
