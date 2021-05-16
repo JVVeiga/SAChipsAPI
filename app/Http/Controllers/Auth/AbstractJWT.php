@@ -32,6 +32,7 @@ abstract class AbstractJWT extends Controller {
             return response()->json(['error' => 'E-mail ou senha inválidos.'], 401);
         }
         $token = JWT::encode([
+            'id' => $entity->id,
             'name' => $entity->name,
             'email' => $request->email,
             'exp' => time() + (env('JWT_EXP', 1440) * 60)

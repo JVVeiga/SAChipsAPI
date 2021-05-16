@@ -16,6 +16,10 @@ class Client extends Model {
         'password'
     ];
 
+    public function adresses() {
+        return $this->hasMany(ClientAddress::class, 'id_client');
+    }
+
     public static function getCustomAttrs(): array {
         return [
             'name' => 'nome',

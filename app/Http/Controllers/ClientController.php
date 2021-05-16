@@ -13,8 +13,6 @@ class ClientController extends Controller {
 
     public function store(Request $request) {
         $this->validate($request, $this->model::getRules(), [], $this->model::getCustomAttrs());
-        $request->password = Hash::make($request->password);
-
         return parent::store($request);
     }
 }

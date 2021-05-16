@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 abstract class AbstractAuth {
 
+    public static $entity;
+
     protected $model;
     protected $tokenJWT;
 
@@ -25,8 +27,8 @@ abstract class AbstractAuth {
 
             $response = JWT::decode($bearerToken, $this->tokenJWT, ['HS256']);
 
-            $entity = $this->model::where('email', $response->email)->first();
-            if ( is_null($entity) ) {
+            self::$entity = $this->model::where('id', $response->id)->where('email', $response->email)->first();
+            if ( is_null(self::$entity) ) {
                 throw new \Exception();
             }
             return $next($request);

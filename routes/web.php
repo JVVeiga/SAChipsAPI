@@ -7,10 +7,11 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => '/api/client', 'middleware' => 'clientAuth'], function() use ($router) {
+    $router->get('adresses', 'ClientAddressController@index');
 });
 
 $router->group(['prefix' => '/api/user', 'middleware' => 'userAuth'], function() use ($router) {
-    $router->post('/register', 'UserController@store');
+    $router->post('register', 'UserController@store');
 });
 
 $router->post('/api/client/login', 'Auth\ClientAuthController@index');

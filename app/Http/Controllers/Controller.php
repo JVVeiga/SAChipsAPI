@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class Controller extends BaseController {
@@ -19,7 +20,11 @@ class Controller extends BaseController {
     }
 
     public function store(Request $request) {
-        return response()->json($this->model::create($request->all()), 201);
+        $data = $request->all();
+        if ( isset($data['password']) ) {
+            $data['password'] = Hash::make($data['password']);
+        }
+        return response()->json($this->model::create($data), 201);
     }
 
     public function show(int $id) {

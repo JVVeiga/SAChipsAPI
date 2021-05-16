@@ -14,9 +14,9 @@ class CreateTableClientOrderAddress extends Migration {
             $table->string('zip_code', 8);
             $table->string('address', 150);
             $table->string('number', 50);
-            $table->string('complement', 50);
+            $table->string('complement', 50)->nullable();
             $table->foreign('id_order', 'fk_order_id_client_order')->references('id')->on('client_order')->onUpdate('no action')->onDelete('cascade');
-            $table->foreign('id_neighborhood', 'fk_neighborhood_id_client_order_address')->references('id')->on('client')->onUpdate('no action')->onDelete('restrict');
+            $table->foreign('id_neighborhood', 'fk_neighborhood_id_client_order_address')->references('id')->on('neighborhood')->onUpdate('no action')->onDelete('restrict');
         });
     }
 
