@@ -20,6 +20,10 @@ class Client extends Model {
         return $this->hasMany(ClientAddress::class, 'id_client');
     }
 
+    public function phones() {
+        return $this->hasMany(ClientPhone::class, 'id_client');
+    }
+
     public static function getCustomAttrs(): array {
         return [
             'name' => 'nome',

@@ -16,6 +16,11 @@ $router->group(['prefix' => 'api'], function() use ($router) {
         $router->post('address', 'ClientAddressController@store');
         $router->put('address/{id}', 'ClientAddressController@update');
         $router->delete('address/{id}', 'ClientAddressController@destroy');
+
+        $router->get('phones', 'ClientPhoneController@index');
+        $router->post('phone', 'ClientPhoneController@store');
+        $router->put('phone/{id}', 'ClientPhoneController@update');
+        $router->delete('phone/{id}', 'ClientPhoneController@destroy');
     });
 
     // Usuários
