@@ -27,12 +27,18 @@ class ClientAddressController extends Controller {
 
         $resource = $this->model::where('id_client', AbstractAuth::$entity->id)->find($id);
         if ( is_null($resource) ) {
-            return response()->json([
-                'error' => 'Endereço não encontrado.'
-            ], 404);
+            return response()->json(['error' => 'Endereço não encontrado.'], 404);
         }
         $resource->fill($request->all());
         $resource->save();
         return $resource;
+    }
+
+    public function destroy(int $id) {
+        $removed = $this->model::where('id', $id)->where('id_client', AbstractAuth::$entity->id)->delete();
+        if ( $removed === 0 ) {
+            return response()->json(['error' => 'Endereço não encontrado.'], 404);
+        }
+        return response()->json(['success' => 'Endereço deletado com sucesso.'], 203);
     }
 }

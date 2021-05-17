@@ -15,6 +15,7 @@ $router->group(['prefix' => 'api'], function() use ($router) {
         $router->get('adresses', 'ClientAddressController@index');
         $router->post('address', 'ClientAddressController@store');
         $router->put('address/{id}', 'ClientAddressController@update');
+        $router->delete('address/{id}', 'ClientAddressController@destroy');
     });
 
     // Usuários
