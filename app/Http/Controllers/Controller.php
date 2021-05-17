@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\AbstractAuth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -20,11 +21,7 @@ class Controller extends BaseController {
     }
 
     public function store(Request $request) {
-        $data = $request->all();
-        if ( isset($data['password']) ) {
-            $data['password'] = Hash::make($data['password']);
-        }
-        return response()->json($this->model::create($data), 201);
+        return response()->json($this->model::create($request->all()), 201);
     }
 
     public function show(int $id) {

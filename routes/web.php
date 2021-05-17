@@ -6,15 +6,28 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => '/api/client', 'middleware' => 'clientAuth'], function() use ($router) {
-    $router->get('adresses', 'ClientAddressController@index');
+$router->group(['prefix' => 'api'], function() use ($router) {
+    // Clientes
+    $router->post('client/login', 'Auth\ClientAuthController@index');
+    $router->post('client/register', 'ClientController@store');
+
+    $router->group(['prefix' => 'client', 'middleware' => 'clientAuth'], function() use ($router) {
+        $router->get('adresses', 'ClientAddressController@index');
+        $router->post('address', 'ClientAddressController@store');
+        $router->put('address/{id}', 'ClientAddressController@update');
+    });
+
+    // Usuários
+    $router->post('user/login', 'Auth\UserAuthController@index');
+
+    $router->group(['prefix' => 'user', 'middleware' => 'userAuth'], function() use ($router) {
+        $router->post('register', 'UserController@store');
+    });
+
+    // Geral
+    $router->get('states', 'StateController@index');
+    $router->get('state/{id}/cities', 'CityController@findByState');
+    $router->get('city/{id}/neighborhoods', 'NeighborhoodController@findByCity');
 });
 
-$router->group(['prefix' => '/api/user', 'middleware' => 'userAuth'], function() use ($router) {
-    $router->post('register', 'UserController@store');
-});
 
-$router->post('/api/client/login', 'Auth\ClientAuthController@index');
-$router->post('/api/client/register', 'ClientController@store');
-
-$router->post('/api/user/login', 'Auth\UserAuthController@index');
