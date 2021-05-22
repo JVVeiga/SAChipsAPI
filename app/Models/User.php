@@ -16,6 +16,10 @@ class User extends Model {
         'password'
     ];
 
+    public function recoveries() {
+        return $this->hasMany(UserRecovery::class, 'id_user');
+    }
+
     public static function getCustomAttrs(): array {
         return [
             'name' => 'nome',

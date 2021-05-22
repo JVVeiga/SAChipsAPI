@@ -7,11 +7,18 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function() use ($router) {
-    // Recuperar senha
-    $router->group(['prefix' => 'client/password'], function() use ($router) {
-        $router->post('reset', 'ClientRecoveryController@sendToken');
-        $router->put('reset/{token}', 'ClientRecoveryController@setPassword');
-        $router->get('reset/{token}', 'ClientRecoveryController@checkToken');
+    // Clientes - Recuperar senha
+    $router->group(['prefix' => 'client/password/reset'], function() use ($router) {
+        $router->post('', 'ClientRecoveryController@sendToken');
+        $router->put('{token}', 'ClientRecoveryController@setPassword');
+        $router->get('{token}', 'ClientRecoveryController@checkToken');
+    });
+
+    // Usuários - Recuperar senha
+    $router->group(['prefix' => 'user/password/reset'], function() use ($router) {
+        $router->post('', 'UserRecoveryController@sendToken');
+        $router->put('{token}', 'UserRecoveryController@setPassword');
+        $router->get('{token}', 'UserRecoveryController@checkToken');
     });
 
     // Clientes

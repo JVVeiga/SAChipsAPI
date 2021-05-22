@@ -33,7 +33,7 @@ abstract class AbstractAuth {
             }
             return $next($request);
         } catch ( \Exception $e ) {
-            return response()->json(['error' => 'Não autorizado: ' . $e->getMessage()], 401);
+            return response()->json(['error' => 'Não autorizado'], 401);
         }
     }
 }
