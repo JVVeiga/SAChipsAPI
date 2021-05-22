@@ -24,6 +24,10 @@ class Client extends Model {
         return $this->hasMany(ClientPhone::class, 'id_client');
     }
 
+    public function recoveries() {
+        return $this->hasMany(ClientRecovery::class, 'id_client');
+    }
+
     public static function getCustomAttrs(): array {
         return [
             'name' => 'nome',

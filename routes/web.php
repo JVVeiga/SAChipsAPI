@@ -7,6 +7,13 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function() use ($router) {
+    // Recuperar senha
+    $router->group(['prefix' => 'client/password'], function() use ($router) {
+        $router->post('reset', 'ClientRecoveryController@sendToken');
+        $router->put('reset/{token}', 'ClientRecoveryController@setPassword');
+        $router->get('reset/{token}', 'ClientRecoveryController@checkToken');
+    });
+
     // Clientes
     $router->post('client/login', 'Auth\ClientAuthController@index');
     $router->post('client/register', 'ClientController@store');

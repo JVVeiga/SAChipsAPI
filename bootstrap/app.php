@@ -62,6 +62,7 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('mail');
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,7 @@ $app->routeMiddleware([
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(\geekcom\ValidatorDocs\ValidatorProvider::class);
+$app->register(Illuminate\Mail\MailServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
